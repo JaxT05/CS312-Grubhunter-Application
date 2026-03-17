@@ -1,0 +1,31 @@
+services:
+  backend:
+    build: ./.docker/grubhunter-backend
+    image: mongo:latest
+    container_name: cs312-grubhunter-backend
+    restart: always
+    environment:
+      - DB_NAME=grubhunter-backend
+      - MONGO_INITDB_DATABASE=grubhunter-backend
+    ports: 
+      - 27017:27017
+    volumes:
+      - "./.docker/grubhunter-backend/seed-mongodb.js:/docker-entrypoint-initdb.d/seed-mongodb.js"
+      - mongodb_data_container:/data/db
+  application:
+    image: node:lts-alpine
+    ports:
+      - 3000:3000
+    volumes:
+      - "./code:/home/node/code"
+    working_dir: /home/node/code/grubhunter
+    environment:
+      - HOST=0.0.0.0
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=100 
+    depends_on: 
+      - backend
+    tty: true
+    command: "npm run dev"
+volumes: 
+  mongodb_data_container:
