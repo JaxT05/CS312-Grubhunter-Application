@@ -1,6 +1,5 @@
-import mongoose from "mongoose";
-import { model } from "mongoose";
-import { locationSchema } from "./schema";
+import mongoose, { model } from "mongoose";
+import { LocationSchema, LocationType } from "./schema";
 
-export default mongoose.models.Location ||
-  model("Location", locationSchema);
+export default mongoose.models.locations ||
+  model<LocationType>("locations", LocationSchema);

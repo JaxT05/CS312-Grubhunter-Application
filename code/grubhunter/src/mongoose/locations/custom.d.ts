@@ -1,9 +1,12 @@
-import Types from "mongoose";
-
-export type LocationLookup = {
-  _id: Types.ObjectId | string;
+export declare type FilterLocationType = 
+{
+    location_id: string | string[];
 };
 
-export type WishlistFilter = {
-  _id: { $in: Types.ObjectId[] | string[] };
+export declare type FilterWishlistType = 
+{
+    on_wishlist: 
+    {
+        $in: string[];
+    }
 };

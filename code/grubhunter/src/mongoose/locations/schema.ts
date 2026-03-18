@@ -1,8 +1,7 @@
 import { Schema } from "mongoose";
 import { InferSchemaType } from "mongoose";
-import { LocationInterface } from "./interface";
 
-export const locationSchema = new Schema({
+export const LocationSchema: Schema = new Schema<LocationType>({
   address: {
     type: "String",
     required: true,
@@ -36,4 +35,4 @@ export const locationSchema = new Schema({
     required: true,
   },
 });
-export type Location = InferSchemaType<typeof locationSchema>;
+export declare type LocationType = InferSchemaType<typeof LocationSchema>;
