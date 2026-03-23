@@ -2,7 +2,7 @@ services:
   backend:
     container_name: grubhunter-backend
     image: mongo:latest
-    restart: always
+    restart: on-failure
     environment:
       MONGO_INITDB_DATABASE: grubhunter
     ports:
