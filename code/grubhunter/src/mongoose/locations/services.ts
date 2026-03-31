@@ -5,8 +5,10 @@ import { QueryOptions } from "mongoose";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 async function getLocations(filter: FilterLocationType | FilterWishlistType | {} ): Promise<LocationType[] | []> {
-  try {
+  try { 
         const result: Array<LocationType | undefined> = await Locations.find( filter);
+        console.log(result);
+        // debugger;
         return result as LocationType[];
     }
     catch (err) {
