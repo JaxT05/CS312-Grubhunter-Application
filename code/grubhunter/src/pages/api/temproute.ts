@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "middleware/db-connect";
-import { getLocationsById } from "../.././mongoose/locations/services";
+import { getLocationsById } from "@/mongoose/locations/services";
 
  const id_array = ["56018", "62432"];
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,0 +1,11 @@
+.layout-grid {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    max-width: 100%;
+}
+@media screen and (min-width: 600px) {
+    .layout-grid {
+        flex-direction: row;
+    }
+}

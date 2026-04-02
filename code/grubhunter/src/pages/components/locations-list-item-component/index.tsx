@@ -1,13 +1,19 @@
 import Link from "next/link";
 import { LocationType } from "@/mongoose/locations/schema";
 
-interface LocationListItemProps {
-  address: string;
-  zipcode: string;
-  borough: string;
-  cuisine: string;
-  grade: string;
-  name: string;
-  on_wishlist: [string];
-  location_id: string;
+interface LocationsListItemProps {
+  location: LocationType;
 }
+const LocationsListItem = ({ location }: LocationsListItemProps) => {
+  return (
+    <li>
+      <Link href={`/location/${location.location_id}`}>
+        <h1>{location.name}</h1>
+        <p>{location.cuisine}</p>
+        <p>{location.borough}</p>
+      </Link>
+    </li>
+  );
+};
+
+export default LocationsListItem;

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import dbConnect from "../../../middleware/db-connect";
+import dbConnect from "middleware/db-connect";
 import { getAllLocations } from "@/mongoose/locations/services"
 
 dbConnect();

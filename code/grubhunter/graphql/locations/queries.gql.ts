@@ -1,5 +1,5 @@
 export const queryTypes = `
 allLocations: [Location]!
-locationsById(locationId: String!): [Location]!
+locationsById(locationIds: [String]!): [Location]!
 onUserWishlist(userId: String!): [Location]!
 `

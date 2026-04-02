@@ -7,8 +7,6 @@ import { QueryOptions } from "mongoose";
 async function getLocations(filter: FilterLocationType | FilterWishlistType | {} ): Promise<LocationType[] | []> {
   try { 
         const result: Array<LocationType | undefined> = await Locations.find( filter);
-        console.log(result);
-        // debugger;
         return result as LocationType[];
     }
     catch (err) {
