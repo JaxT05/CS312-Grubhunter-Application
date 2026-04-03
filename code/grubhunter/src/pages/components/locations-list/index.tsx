@@ -1,5 +1,5 @@
 import { LocationType } from "@/mongoose/locations/schema";
-import LocationsListItem from "../locations-list-item-component";
+import LocationsListItem from "../locations-list-item";
 import styles from "./index.module.css";
 
 interface LocationsListProps {
