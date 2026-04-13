@@ -10,8 +10,21 @@ interface resolverContext {
 }
 
 export const authGuard = (params: mutationParameters, context: resolverContext): boolean | Error => {
-    if (!context || !context.authToken || !context.)
+    if (!context || !context.authToken || !context.authToken.fdlst_private_userId) {
+        return new GraphQLError ("User is not authenticated", {
+            extensions: {
+                code: "UNAUTHENTICATED",
+                http: { status: 500}
+            }});
+    }
+    if (context.authToken.fdlst_private_userId !== params.userId) {
+        return new GraphQLError ("User is not authorized.", {
+            extensions: {
+                code: "UNAUTHORIZED",
+                http: { status: 500}
+            }});
+    }
+    return true;
 }
-
 
 
