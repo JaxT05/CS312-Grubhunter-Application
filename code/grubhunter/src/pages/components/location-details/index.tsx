@@ -14,12 +14,12 @@ const LocationDetails = ({ location }: LocationsListItemProps) => {
   const { data: session } = useSession();
   const [onWishlist, setOnWishlist] = useState(false);
   const [loading, setLoading] = useState(false);
-
   useEffect(() => {
-    if (session.user.id && location.wishlist) {
-      setOnWishlist(location.wishlist.includes(session.user.id));
+    if (session?.user?.id && location.on_wishlist) {
+      const wishlistArray = location.on_wishlist as string[];
+      setOnWishlist(wishlistArray.includes(session?.user?.id));
     }
-  }, [session.user.id, location.wishlist]);
+  }, [session?.user?.id, location.on_wishlist]);
   const wishlistAction = async (locationId: string, userId: string) => {
     if (loading) return;
     setLoading(true);
@@ -48,6 +48,7 @@ const LocationDetails = ({ location }: LocationsListItemProps) => {
       console.error("Error updating wishlist:", error);
     }
   };
+  console.log(location);
   return (
     <div className="location-details">
       <h1>{location.name as string}</h1>
@@ -58,8 +59,8 @@ const LocationDetails = ({ location }: LocationsListItemProps) => {
       <p>{location.grade as string}</p>
       <Button
         disabled={loading}
-        clickHandler={() => wishlistAction(location.id, session.user.id)}
-        variant={onWishlist ? "blue" : "outlined"}>
+        clickHandler={() => wishlistAction(location.id, session?.user?.id)}
+        variant={onWishlist ? "blue" : "outline"}>
         {onWishlist ? "Remove from Wishlist" : "Add to Wishlist"}
       </Button>
     </div>

@@ -15,9 +15,6 @@ const WishlistPage: NextPage<WishlistPageProps> = ({ locations, userId }) => {
 
   return (
     <>
-      <head>
-        <title>{isOwner ? "My Wishlist" : "User Wishlist"} | </title>
-      </head>
       <div>
         <h1>{isOwner ? "Your Wishlist" : "Wishlist"}</h1>
 
