@@ -16,10 +16,10 @@ const LocationDetails = ({ location }: LocationsListItemProps) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (userId && location.wishlist) {
-      setOnWishlist(location.wishlist.includes(userId));
+    if (session.user.id && location.wishlist) {
+      setOnWishlist(location.wishlist.includes(session.user.id));
     }
-  }, [userId, location.wishlist]);
+  }, [session.user.id, location.wishlist]);
   const wishlistAction = async (locationId: string, userId: string) => {
     if (loading) return;
     setLoading(true);
@@ -58,7 +58,7 @@ const LocationDetails = ({ location }: LocationsListItemProps) => {
       <p>{location.grade as string}</p>
       <Button
         disabled={loading}
-        clickHandler={() => wishlistAction(locationId: location.id, userId: session.user.id)}
+        clickHandler={() => wishlistAction(location.id, session.user.id)}
         variant={onWishlist ? "blue" : "outlined"}>
         {onWishlist ? "Remove from Wishlist" : "Add to Wishlist"}
       </Button>
