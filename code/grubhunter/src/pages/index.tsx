@@ -5,6 +5,7 @@ import { getAllLocations } from "@/mongoose/locations/services";
 
 export const getStaticProps: GetStaticProps = async () => {
   const locations = await getAllLocations();
+  console.log(locations);
   return {
     props: {
       locations: JSON.parse(JSON.stringify(locations)),
