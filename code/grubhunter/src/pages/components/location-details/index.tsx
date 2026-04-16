@@ -14,41 +14,50 @@ const LocationDetails = ({ location }: LocationsListItemProps) => {
   const { data: session } = useSession();
   const [onWishlist, setOnWishlist] = useState(false);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    if (session?.user?.id && location.on_wishlist) {
-      const wishlistArray = location.on_wishlist as string[];
-      setOnWishlist(wishlistArray.includes(session?.user?.id));
-    }
-  }, [session?.user?.id, location.on_wishlist]);
-  const wishlistAction = async (locationId: string, userId: string) => {
+    const userId = session?.user.fdlst_private_userId;
+    const wishlistArray = location.on_wishlist as string[];
+    setOnWishlist(
+      userId && location.on_wishlist.includes(userId) ? true : false,
+    );
+  }, [session]);
+
+  const wishlistAction = async (props: WishlistProps) => {
+    console.log(props);
+    const { locationId, userId } = props;
+
     if (loading) return;
     setLoading(true);
-    const mutationType = onWishlist ? "remove" : "add";
-    try {
-      const response = await fetch("/api/graphql", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+    const mutationType = onWishlist ? "addWishlist" : "removeWishlist";
+    fetch("/api/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: ` mutation wishlist (
+        ${mutationType} (
+        location_id: "${locationId}",
+        user_id: "${userId}")
+      ){
+        on_wishlist
         },
-        body: JSON.stringify({
-          query: `
-            mutation ($locationId: String!, $userId: String!) {
-              ${mutationType}Wishlist(locationId: $locationId, userId: $userId) {
-                id
-              }
-            }`,
-          variables: {
-            locationId: locationId,
-            userId: userId,
-          },
-        }),
+      }`,
+      }),
+    })
+      .then((result) => {
+        if (result) {
+          console.log(result);
+        }
+        if (result.status === 200) {
+          setOnWishlist(mutationType === "addWishlist" ? true : false);
+        }
+      })
+      .finally(() => {
+        setLoading(false);
       });
-      const result = await response.json();
-    } catch (error) {
-      console.error("Error updating wishlist:", error);
-    }
   };
-  console.log(location);
   return (
     <div className="location-details">
       <h1>{location.name as string}</h1>
@@ -59,7 +68,12 @@ const LocationDetails = ({ location }: LocationsListItemProps) => {
       <p>{location.grade as string}</p>
       <Button
         disabled={loading}
-        clickHandler={() => wishlistAction(location.id, session?.user?.id)}
+        clickHandler={() =>
+          wishlistAction({
+            locationId: location._id as string,
+            userId: session?.user.fdlst_private_userId,
+          })
+        }
         variant={onWishlist ? "blue" : "outline"}>
         {onWishlist ? "Remove from Wishlist" : "Add to Wishlist"}
       </Button>
