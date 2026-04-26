@@ -1,16 +1,15 @@
 import mongoose from "mongoose";
-import DefaultSession from "next-auth";
+
 
 declare global {
-    var mongoose: typeof mongoose;
+    var mongoose: mongoose;
   }
 
   declare module "next-auth" {
-    interface Session extends DefaultSession {
+    interface Session {
       user: {
          fdlst_private_userId: string;
       } & DefaultSession["user"];
     }
   }
-export {};
 

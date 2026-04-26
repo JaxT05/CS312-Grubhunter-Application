@@ -12,12 +12,11 @@ interface WishlistProps {
 }
 const LocationDetails = ({ location }: LocationsListItemProps) => {
   const { data: session } = useSession();
-  const [onWishlist, setOnWishlist] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [onWishlist, setOnWishlist] = useState<Boolean>(false);
+  const [loading, setLoading] = useState<Boolean>(false);
 
   useEffect(() => {
     const userId = session?.user.fdlst_private_userId;
-    const wishlistArray = location.on_wishlist as string[];
     setOnWishlist(
       userId && location.on_wishlist.includes(userId) ? true : false,
     );

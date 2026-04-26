@@ -2,8 +2,8 @@ import {JWT} from "next-auth/jwt";
 import {GraphQLError} from "graphql";
 
 interface mutationParameters {
-    userId: string;
-    locationId: string;
+    user_id: string;
+    location_id: string;
 }
 interface resolverContext {
     authToken: JWT;
@@ -17,7 +17,7 @@ export const authGuard = (params: mutationParameters, context: resolverContext):
                 http: { status: 500}
             }});
     }
-    if (context.authToken.fdlst_private_userId !== params.userId) {
+    if (context.authToken.fdlst_private_userId !== params.user_id) {
         return new GraphQLError ("User is not authorized.", {
             extensions: {
                 code: "UNAUTHORIZED",

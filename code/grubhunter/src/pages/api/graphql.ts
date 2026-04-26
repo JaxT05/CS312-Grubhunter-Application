@@ -11,9 +11,9 @@ const server = new ApolloServer<BaseContext>({
   typeDefs,
 });
 
-const handler = startServerAndCreateNextHandler(server, {context: async (req) => {
+const handler = startServerAndCreateNextHandler(server, {context: async (req: NextApiRequest) => {
   const token = await getToken({req});
-  return {authToken: token};
+  return {token};
 }
 });
 

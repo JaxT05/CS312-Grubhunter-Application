@@ -1,29 +1,36 @@
-import React from "react";
+import React, { JSX } from "react";
 import styles from "./index.module.css";
 
 interface PropsInterface {
   disabled?: boolean;
   children?: React.ReactNode;
   variant?: "blue" | "outline";
-  clickHandler?: () => void;
+  clickHandler?: () => any;
 }
 
-const Button = (props: PropsInterface): React.JSX.Element => {
-  const { disabled, children, variant, clickHandler } = props;
+const Button = (props: PropsInterface): JSX.Element => {
+  const { children, variant, disabled, clickHandler } = props;
   const renderContent = (children: React.ReactNode) => {
     if (disabled) {
+      return <span className={styles.span}> {children} </span>;
+    } else {
       return (
-        <button className={styles.default} disabled>
+        <span className={styles.span} onClick={clickHandler}>
           {children}
-        </button>
+        </span>
       );
     }
-    return (
-      <button className={styles.blue} onClick={clickHandler}>
-        {children}
-      </button>
-    );
   };
-  return <>{renderContent(children)}</>;
+  return (
+    <div
+      className={[
+        styles.root,
+        disabled ? styles.disabled : " ",
+        styles[variant || "default"],
+      ].join(" ")}>
+      {renderContent(children)}
+    </div>
+  );
 };
+
 export default Button;
